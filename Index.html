@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Somma's Foods | Pastries & Small Chops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #15110D;
+    --bg-soft: #1D1812;
+    --card: #221C15;
+    --gold: #D4A24E;
+    --gold-bright: #E8BC6E;
+    --cream: #F2E9DC;
+    --cream-dim: #C9BDA9;
+    --terracotta: #C2542C;
+    --line: #332A1F;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 100px;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle at 20% 20%, rgba(212,162,78,0.06), transparent 40%),
+                       radial-gradient(circle at 80% 60%, rgba(194,84,44,0.07), transparent 45%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  h1, h2, h3 { font-family: 'Fraunces', serif; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+  header.hero { padding: 56px 0 32px; text-align: center; border-bottom: 1px solid var(--line); }
+  .eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 14px; }
+  header.hero h1 { font-size: clamp(2.2rem, 8vw, 3.2rem); font-weight: 700; font-style: italic; color: var(--cream); line-height: 1.1; margin-bottom: 14px; }
+  header.hero h1 span { color: var(--gold-bright); font-style: normal; }
+  header.hero p { color: var(--cream-dim); font-size: 15px; max-width: 420px; margin: 0 auto; line-height: 1.6; }
+  .hero-tray { margin-top: 22px; font-size: 13px; color: var(--cream-dim); letter-spacing: 0.04em; }
+  .hero-tray b { color: var(--gold); }
+  .section-label { margin: 40px 0 18px; display: flex; align-items: baseline; gap: 10px; }
+  .section-label h2 { font-size: 20px; font-style: italic; font-weight: 600; color: var(--cream); }
+  .section-label .count { font-size: 12px; color: var(--cream-dim); font-family: 'Inter', sans-serif; }
+  .section-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .item { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 14px; transition: border-color 0.2s ease; }
+  .item.in-tray { border-color: var(--gold); }
+  .item-thumb { width: 56px; height: 56px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 26px; background: linear-gradient(135deg, #2B2117, #1A150F); border: 1px solid var(--line); }
+  .item-info { flex: 1; min-width: 0; }
+  .item-info h3 { font-size: 16px; font-weight: 600; font-style: normal; color: var(--cream); margin-bottom: 2px; }
+  .item-info p { font-size: 12.5px; color: var(--cream-dim); line-height: 1.4; }
+  .stepper { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .stepper button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--gold-bright); font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s ease, transform 0.1s ease; }
+  .stepper button:active { transform: scale(0.92); }
+  .stepper button.plus { background: var(--gold); color: #1A150F; border-color: var(--gold); }
+  .stepper span { min-width: 16px; text-align: center; font-weight: 600; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .form-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-top: 8px; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 7px; }
+  .field input, .field textarea { width: 100%; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 9px; padding: 12px 14px; color: var(--cream); font-family: 'Inter', sans-serif; font-size: 14.5px; outline: none; transition: border-color 0.15s ease; }
+  .field input:focus, .field textarea:focus { border-color: var(--gold); }
+  .field textarea { resize: vertical; min-height: 64px; }
+  .pay-options { display: flex; gap: 10px; }
+  .pay-options label { flex: 1; text-transform: none; letter-spacing: normal; font-weight: 500; font-size: 13.5px; color: var(--cream-dim); background: var(--bg-soft); border: 1px solid var(--line); border-radius: 9px; padding: 12px; text-align: center; cursor: pointer; transition: border-color 0.15s ease, color 0.15s ease; }
+  .pay-options input { display: none; }
+  .pay-options input:checked + span { color: var(--gold-bright); font-weight: 600; }
+  .pay-options label:has(input:checked) { border-color: var(--gold); background: rgba(212,162,78,0.08); }
+  .tray-bar { position: fixed; bottom: 16px; left: 16px; right: 16px; max-width: 608px; margin: 0 auto; background: var(--gold); color: #1A150F; border-radius: 14px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 8px 28px rgba(0,0,0,0.45); cursor: pointer; z-index: 10; opacity: 0; transform: translateY(20px); pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease; }
+  .tray-bar.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .tray-bar .left { font-weight: 700; font-size: 14.5px; }
+  .tray-bar .left small { display: block; font-weight: 500; font-size: 11.5px; opacity: 0.75; margin-top: 1px; }
+  .tray-bar .arrow { font-size: 18px; font-weight: 700; }
+  .send-btn { width: 100%; background: var(--terracotta); color: #FBEDE5; border: none; border-radius: 10px; padding: 15px; font-size: 15.5px; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; margin-top: 6px; transition: filter 0.15s ease, transform 0.1s ease; }
+  .send-btn:active { transform: scale(0.985); }
+  .send-btn:hover { filter: brightness(1.08); }
+  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .helper-text { font-size: 12px; color: var(--cream-dim); text-align: center; margin-top: 10px; line-height: 1.5; }
+  footer { text-align: center; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--cream-dim); font-size: 12px; }
+  footer .brand { color: var(--gold); font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; margin-bottom: 4px; }
+  #order-section { scroll-margin-top: 20px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Homemade &middot; Made to Order</div>
+    <h1>Somma's <span>Foods</span></h1>
+    <p>Pastries, small chops, snacks, drinks and simple meals — made fresh and delivered to your door. Pick what you want below, or type your own request — we'll confirm price and delivery on WhatsApp.</p>
+    <div class="hero-tray">🍢 Build your tray, then send it straight to <b>WhatsApp</b></div>
+  </header>
+  <div class="section-label"><h2>Small Chops</h2><span class="count">tap + to add</span></div>
+  <div id="small-chops"></div>
+  <div class="section-label"><h2>Pastries</h2><span class="count">tap + to add</span></div>
+  <div id="pastries"></div>
+  <div class="section-label"><h2>Cakes</h2><span class="count">tap + to add</span></div>
+  <div id="cakes"></div>
+  <div class="section-label"><h2>Chin Chin</h2><span class="count">tap + to add</span></div>
+  <div id="chinchin"></div>
+  <div class="section-label"><h2>Snacks</h2><span class="count">tap + to add</span></div>
+  <div id="snacks"></div>
+  <div class="section-label"><h2>Drinks</h2><span class="count">tap + to add</span></div>
+  <div id="drinks"></div>
+  <div class="section-label"><h2>Parfaits</h2><span class="count">tap + to add</span></div>
+  <div id="parfaits"></div>
+  <div class="section-label"><h2>Simple Meals</h2><span class="count">tap + to add</span></div>
+  <div id="meals"></div>
+  <div class="section-label"><h2>Don't see it? Type your own</h2><span class="count">optional</span></div>
+  <div class="form-card" style="margin-bottom: 12px;">
+    <div class="field" style="margin-bottom: 12px;">
+      <label for="custom-item">Item name</label>
+      <input id="custom-item" type="text" placeholder="e.g. Coconut candy" />
+    </div>
+    <div class="field" style="margin-bottom: 0;">
+      <label for="custom-qty">Quantity / details</label>
+      <input id="custom-qty" type="text" placeholder="e.g. 2 packs, extra spicy" />
+    </div>
+    <button class="send-btn" id="addCustomBtn" style="background: var(--gold); color: #1A150F; margin-top: 14px;">Add to tray</button>
+  </div>
+  <div id="order-section" class="section-label"><h2>Your Details</h2><span class="count">last step</span></div>
+  <div class="form-card">
+    <div class="field">
+      <label for="name">Full name</label>
+      <input id="name" type="text" placeholder="e.g. Adaeze Okonkwo" />
+    </div>
+    <div class="field">
+      <label for="phone">Phone number</label>
+      <input id="phone" type="tel" placeholder="e.g. 0803 123 4567" />
+    </div>
+    <div class="field">
+      <label for="address">Delivery address</label>
+      <textarea id="address" placeholder="Street, area/landmark, city"></textarea>
+    </div>
+    <div class="field">
+      <label for="datetime">Preferred date / time</label>
+      <input id="datetime" type="text" placeholder="e.g. Sat, by 4pm" />
+    </div>
+    <div class="field">
+      <label>Payment method</label>
+      <div class="pay-options">
+        <label><input type="radio" name="pay" value="Bank transfer" checked><span>Bank transfer</span></label>
+        <label><input type="radio" name="pay" value="Pay on delivery"><span>Pay on delivery</span></label>
+      </div>
+    </div>
+    <div class="field" style="margin-bottom:0;">
+      <label for="notes">Any notes (optional)</label>
+      <input id="notes" type="text" placeholder="e.g. less spicy, no onions" />
+    </div>
+  </div>
+  <button class="send-btn" id="sendBtn" disabled>Add items to your tray first</button>
+  <p class="helper-text">Tapping send opens WhatsApp with your order ready to go.<br>We'll reply to confirm price, availability and delivery time.</p>
+  <footer>
+    <div class="brand">Somma's Foods</div>
+    Pastries &amp; Small Chops &middot; Orders via WhatsApp
+  </footer>
+</div>
+<div class="tray-bar" id="trayBar">
+  <div class="left"><span id="trayCount">0 items</span><small>Tap to review &amp; send</small></div>
+  <div class="arrow">↓</div>
+</div>
+<script>
+  const WHATSAPP_NUMBER = "2349061290026";
+  const menu = {
+    "small-chops": [
+      { id: "spring-rolls", name: "Spring Rolls", desc: "Crispy veggie-filled rolls", icon: "🥢" },
+      { id: "samosa", name: "Samosa", desc: "Spiced beef or veggie filling", icon: "🥟" },
+      { id: "puff-puff", name: "Puff-Puff", desc: "Soft, sweet, fried-to-order", icon: "🍩" },
+      { id: "chicken-wings", name: "Peppered Chicken Wings", desc: "Bold pepper sauce, bite-size", icon: "🍗" },
+      { id: "fish-roll", name: "Fish Roll", desc: "Flaky pastry, seasoned fish filling", icon: "🐟" },
+      { id: "skewered-meat", name: "Skewered Suya Bites", desc: "Grilled, smoky, yaji-spiced", icon: "🍢" }
+    ],
+    "pastries": [
+      { id: "meat-pie", name: "Meat Pie", desc: "Flaky crust, seasoned minced meat", icon: "🥧" },
+      { id: "chicken-pie", name: "Chicken Pie", desc: "Buttery pastry, chicken filling", icon: "🥐" },
+      { id: "doughnut", name: "Doughnut", desc: "Glazed, soft and fluffy", icon: "🍩" },
+      { id: "cupcakes", name: "Cupcakes", desc: "Assorted flavours, frosted", icon: "🧁" },
+      { id: "sausage-roll", name: "Sausage Roll", desc: "Classic, golden and crisp", icon: "🌭" }
+    ],
+    "cakes": [
+      { id: "cake-vanilla", name: "Vanilla Cake", desc: "Classic, soft and fragrant", icon: "🍰" },
+      { id: "cake-red-velvet", name: "Red Velvet Cake", desc: "Rich, smooth cream cheese finish", icon: "🍰" },
+      { id: "cake-chocolate", name: "Chocolate Cake", desc: "Deep cocoa, moist layers", icon: "🍫" }
+    ],
+    "chinchin": [
+      { id: "chinchin-classic", name: "Chin Chin", desc: "Crunchy, lightly sweet", icon: "🍪" },
+      { id: "chinchin-mini", name: "Mini Chin Chin", desc: "Bite-size, great for parties", icon: "🍪" }
+    ],
+    "snacks": [
+      { id: "plantain-chips", name: "Plantain Chips", desc: "Crispy, lightly salted", icon: "🍌" },
+      { id: "kilishi", name: "Kilishi", desc: "Dried, spiced suya-style beef", icon: "🥩" },
+      { id: "granola", name: "Granola", desc: "Toasted oats, nuts and dried fruit", icon: "🥣" }
+    ],
+    "drinks": [
+      { id: "yoghurt", name: "Yoghurt", desc: "Smooth and creamy, chilled", icon: "🥤" },
+      { id: "zobo", name: "Zobo Drink", desc: "Hibiscus, spiced and chilled", icon: "🧃" },
+      { id: "milkshake", name: "Milkshake", desc: "Thick, cold, your choice of flavour", icon: "🥤" }
+    ],
+    "parfaits": [
+      { id: "parfait-classic", name: "Parfait", desc: "Layered yoghurt, granola and fruit", icon: "🍨" },
+      { id: "parfait-fruit", name: "Fruit Parfait", desc: "Fresh fruit, light and refreshing", icon: "🍓" }
+    ],
+    "meals": [
+      { id: "pizza", name: "Pizza", desc: "Oven-baked, ask about toppings", icon: "🍕" },
+      { id: "shawarma", name: "Shawarma", desc: "Wrapped, grilled, fully loaded", icon: "🌯" },
+      { id: "simple-meal", name: "Simple Meal", desc: "Everyday home-style plate", icon: "🍽️" }
+    ]
+  };
+  const tray = {};
+  function renderSection(containerId, items) {
+    const container = document.getElementById(containerId);
+    items.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'item';
+      el.id = `item-${item.id}`;
+      el.innerHTML = `
+        <div class="item-thumb">${item.icon}</div>
+        <div class="item-info"><h3>${item.name}</h3><p>${item.desc}</p></div>
+        <div class="stepper">
+          <button class="minus" aria-label="Remove one ${item.name}">−</button>
+          <span id="qty-${item.id}">0</span>
+          <button class="plus" aria-label="Add one ${item.name}">+</button>
+        </div>`;
+      container.appendChild(el);
+      el.querySelector('.minus').addEventListener('click', () => updateQty(item, -1));
+      el.querySelector('.plus').addEventListener('click', () => updateQty(item, 1));
+    });
+  }
+  function updateQty(item, delta) {
+    const current = tray[item.id]?.qty || 0;
+    const next = Math.max(0, current + delta);
+    if (next === 0) { delete tray[item.id]; } else { tray[item.id] = { name: item.name, qty: next }; }
+    document.getElementById(`qty-${item.id}`).textContent = next;
+    document.getElementById(`item-${item.id}`).classList.toggle('in-tray', next > 0);
+    updateTrayBar();
+    updateSendButton();
+  }
+  function updateTrayBar() {
+    const bar = document.getElementById('trayBar');
+    const totalItems = Object.values(tray).reduce((sum, t) => sum + t.qty, 0);
+    const totalLines = Object.keys(tray).length;
+    if (totalItems > 0) {
+      document.getElementById('trayCount').textContent = `${totalItems} item${totalItems > 1 ? 's' : ''} · ${totalLines} kind${totalLines > 1 ? 's' : ''}`;
+      bar.classList.add('show');
+    } else { bar.classList.remove('show'); }
+  }
+  function updateSendButton() {
+    const btn = document.getElementById('sendBtn');
+    const hasItems = Object.keys(tray).length > 0;
+    btn.disabled = !hasItems;
+    btn.textContent = hasItems ? "Send Order on WhatsApp" : "Add items to your tray first";
+  }
+  document.getElementById('trayBar').addEventListener('click', () => {
+    document.getElementById('order-section').scrollIntoView({ behavior: 'smooth' });
+  });
+  renderSection('small-chops', menu['small-chops']);
+  renderSection('pastries', menu['pastries']);
+  renderSection('cakes', menu['cakes']);
+  renderSection('chinchin', menu['chinchin']);
+  renderSection('snacks', menu['snacks']);
+  renderSection('drinks', menu['drinks']);
+  renderSection('parfaits', menu['parfaits']);
+  renderSection('meals', menu['meals']);
+  let customCounter = 0;
+  document.getElementById('addCustomBtn').addEventListener('click', () => {
+    const nameInput = document.getElementById('custom-item');
+    const qtyInput = document.getElementById('custom-qty');
+    const name = nameInput.value.trim();
+    const details = qtyInput.value.trim();
+    if (!name) { alert("Please type the item you'd like to order."); nameInput.focus(); return; }
+    customCounter++;
+    const id = `custom-${customCounter}`;
+    const fullName = details ? `${name} (${details})` : name;
+    tray[id] = { name: fullName, qty: 1 };
+    nameInput.value = '';
+    qtyInput.value = '';
+    updateTrayBar();
+    updateSendButton();
+    const btn = document.getElementById('addCustomBtn');
+    const original = btn.textContent;
+    btn.textContent = "Added ✓";
+    setTimeout(() => { btn.textContent = original; }, 1200);
+  });
+  document.getElementById('sendBtn').addEventListener('click', () => {
+    const items = Object.keys(tray);
+    if (items.length === 0) return;
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const datetime = document.getElementById('datetime').value.trim();
+    const notes = document.getElementById('notes').value.trim();
+    const pay = document.querySelector('input[name="pay"]:checked').value;
+    if (!name || !phone || !address) {
+      alert("Please fill in your name, phone number and delivery address before sending.");
+      document.getElementById('order-section').scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    let msg = `Hi Somma's Foods! I'd like to place an order:\n\n`;
+    msg += `*Order:*\n`;
+    Object.values(tray).forEach(t => { msg += `• ${t.name} x${t.qty}\n`; });
+    msg += `\n*Name:* ${name}`;
+    msg += `\n*Phone:* ${phone}`;
+    msg += `\n*Delivery address:* ${address}`;
+    if (datetime) msg += `\n*Preferred date/time:* ${datetime}`;
+    msg += `\n*Payment:* ${pay}`;
+    if (notes) msg += `\n*Notes:* ${notes}`;
+    msg += `\n\nPlease confirm price and delivery time. Thank you!`;
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  });
+</script>
+</body>
+</html>
